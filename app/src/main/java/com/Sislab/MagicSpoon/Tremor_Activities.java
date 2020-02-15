@@ -10,7 +10,6 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.util.Log;
@@ -23,10 +22,8 @@ import android.widget.TextView;
 import com.Sislab.MagicSpoon.SQLiteDatabase.TremorTestData;
 import com.Sislab.MagicSpoon.model.TremorTest;
 
-import java.util.Date;
 
 public class Tremor_Activities extends Fragment implements SensorEventListener {
-
     private static final String TAG = "Tremor_Activities";
     private TremorTest tremorTest;
     private TremorTestData myDb;
@@ -37,11 +34,12 @@ public class Tremor_Activities extends Fragment implements SensorEventListener {
     private Button btnStart,btnReset;
 
 
-    long tMillisec,tStart,tBuff,tUpdate = 0L;
+    long tMillisec= 0L,tStart=0L,tBuff=0L,tUpdate = 0L;
     int sec,millisec;
 
     private boolean timerRunning;
     Handler handler;
+
 
     @Nullable
     @Override
@@ -54,6 +52,7 @@ public class Tremor_Activities extends Fragment implements SensorEventListener {
     @Override
     public void onStart() {
         super.onStart();
+        myDb = new TremorTestData(this.getContext());
         instruction = (TextView) getView().findViewById(R.id.instruction_hold);
         Xaxis = (TextView) getView().findViewById(R.id.X_Tremor);
         Yaxis = (TextView) getView().findViewById(R.id.Y_Tremor);
@@ -88,13 +87,17 @@ public class Tremor_Activities extends Fragment implements SensorEventListener {
             tremorTest = new TremorTest();
             tMillisec = SystemClock.uptimeMillis() - tStart;
             tUpdate = tBuff + tMillisec;
-            sec = ((int)(tUpdate/1000))%60 ;
-            millisec = (int) (tUpdate%100);
-            tremorTest.setTime(String.format("%02d",sec)+"."+String.format("%02d",millisec));
+            sec = (int)(tUpdate/1000);
+            sec %= 60;
+            millisec = (int) (tUpdate%1000);
+            tremorTest.setTime(String.format("%02d",sec)+"."+String.format("%03d",millisec));
             sensorManager.registerListener(Tremor_Activities.this,accelerometer,SensorManager.SENSOR_DELAY_NORMAL);
-            handler.postDelayed(this,60);
+            instruction.setVisibility(View.VISIBLE);
+            instruction.setText(tremorTest.getTime());
+            handler.postDelayed(this,0);
             if(sec == 20){
                 resetTimer();
+                handler.removeCallbacks(runnable);
             }
         }
     };
@@ -113,7 +116,7 @@ public class Tremor_Activities extends Fragment implements SensorEventListener {
         sec =0;
         millisec = 0;
         timerRunning = false;
-//        myDb.deteleData();
+        myDb.deteleData();
     }
 
     private void startTimer() {
@@ -122,7 +125,6 @@ public class Tremor_Activities extends Fragment implements SensorEventListener {
         timerRunning =true;
         btnStart.setText("Pause");
         btnReset.setEnabled(false);
-
     }
     private void pauseTimer() {
         tBuff += tMillisec;
@@ -130,6 +132,7 @@ public class Tremor_Activities extends Fragment implements SensorEventListener {
         timerRunning = false;
         btnStart.setText("Continue");
         btnReset.setEnabled(true);
+        sensorManager.unregisterListener(Tremor_Activities.this,accelerometer);
     }
 
 
@@ -141,11 +144,11 @@ public class Tremor_Activities extends Fragment implements SensorEventListener {
         tremorTest.setxAxis(Float.parseFloat(String.format("%.2f",sensorEvent.values[0])));
         tremorTest.setyAxis(Float.parseFloat(String.format("%.2f",sensorEvent.values[1])));
         tremorTest.setzAxis(Float.parseFloat(String.format("%.2f",sensorEvent.values[2])));
-        Log.d(TAG,   "Time: "+tremorTest.getTime()+", xAxis: "+tremorTest.getxAxis());
-//        AddData(tremorTest.getTime(),tremorTest.getxAxis(),tremorTest.getyAxis(),tremorTest.getzAxis());
+        System.out.println(Float.parseFloat(tremorTest.getTime()));
+        AddData("12",  12,12,12);
     }
 
-    private void AddData(float time, float getxAxis, float getyAxis, float getzAxis) {
+    private void AddData(String time, float getxAxis, float getyAxis, float getzAxis) {
         boolean insertData = myDb.addData(time,getxAxis,getyAxis,getzAxis);
         if(insertData){
             Log.d(TAG, "AddData: Success");

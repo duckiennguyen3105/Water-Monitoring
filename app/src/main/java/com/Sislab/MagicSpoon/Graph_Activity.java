@@ -36,7 +36,6 @@ public class Graph_Activity extends Fragment {
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
     private LineDataSet lineBreathe = new LineDataSet(null,null);
-
     private LineData data;
     private Description description = new Description();
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");

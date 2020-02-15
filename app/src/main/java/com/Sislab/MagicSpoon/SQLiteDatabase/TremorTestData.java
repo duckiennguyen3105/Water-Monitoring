@@ -5,12 +5,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import androidx.annotation.Nullable;
 
 public class TremorTestData extends SQLiteOpenHelper {
-    private static final String DATABASE_NAME = "MagicSpoon.db";
+    private static final String DATABASE_NAME = "MagicSpoon2.db";
     private static final String TABLE_NAME = "tremor_data";
 
     private static final String TIME = "time";
@@ -24,7 +23,7 @@ public class TremorTestData extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        String createTable = "CREATE TABLE "+ TABLE_NAME+ " ( "+TIME+ " REAL PRIMARY KEY, "+
+        String createTable = "CREATE TABLE "+ TABLE_NAME+ " ( "+TIME+ " TEXT, "+
                 XAXIS +" REAL, "+
                 YAXIS +" REAL, "+
                 ZAXIS +" REAL)";
@@ -36,7 +35,7 @@ public class TremorTestData extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
     }
 
-    public boolean addData(float time,float xAs,float yAs,float zAs){
+    public boolean addData(String time,float xAs,float yAs,float zAs){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(TIME,time);
