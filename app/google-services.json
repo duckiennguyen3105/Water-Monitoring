@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "409272214637",
+    "firebase_url": "https://kien31051999-firebase.firebaseio.com",
+    "project_id": "kien31051999-firebase",
+    "storage_bucket": "kien31051999-firebase.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:409272214637:android:287e6177e7713d7cff0b64",
+        "android_client_info": {
+          "package_name": "com.Sislab.MagicSpoon"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "409272214637-08i8ofgbi9l6u7s7u0a1dl2evladkkdi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.Sislab.MagicSpoon",
+            "certificate_hash": "11237e6578012bd3dfeef7acc77b3da1ff5ff632"
+          }
+        },
+        {
+          "client_id": "409272214637-e2jok7bsnf5jg3m8p6dgu6rfi1fqnd1o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_g5LdwIv4SvhQOO6EnZbBTeVFHEPHWck"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "409272214637-e2jok7bsnf5jg3m8p6dgu6rfi1fqnd1o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

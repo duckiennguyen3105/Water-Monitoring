@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#f57c00</color>
+    <color name="colorPrimaryDark">#ffa726</color>
+    <color name="colorAccent">#fb8c00</color>
+    <color name="background">#EEEDEF</color>
+    <color name="solidCircle">#80FFFFFF</color>
+    <color name="circleBorder">#30FFFFFF</color>
+    <color name="gradStart">#F1A813</color>
+    <color name="gradEnd">#f57c00</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="mail">#3D3D3D</color>
+    <color name="grey">#E5E5E5</color>
+</resources>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/nav_chart"
+            android:icon="@drawable/ic_chart"
+            android:title="Vabration's Chart"/>
+        <item android:id="@+id/nav_bluetooth"
+            android:icon="@drawable/ic_bluetooth_device"
+            android:title="Device Connection Status"/>
+        <item android:id="@+id/nav_history"
+            android:icon="@drawable/ic_history_details"
+            android:title="History of Vabration Chart"/>
+        <item
+            android:id="@+id/nav_tremorTest"
+            android:icon="@drawable/ic_assignment_turned_in_black_24dp"
+            android:title="Tremor Test" />
+    </group>
+    <item android:title="User Details">
+        <menu>
+            <item android:id="@+id/nav_profile"
+                android:checkable="true"
+                android:icon="@drawable/ic_profile"
+                android:title="Profile"/>
+            <item android:id="@+id/nav_logout"
+                android:icon="@drawable/ic_logout"
+                android:title="Log Out"/>
+        </menu>
+    </item>
+</menu>

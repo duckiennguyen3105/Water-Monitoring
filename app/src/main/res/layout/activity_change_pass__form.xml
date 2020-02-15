@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp"
+    tools:context=".ChangePass_Form">
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        app:passwordToggleEnabled="true"
+        >
+
+        <EditText
+            android:id="@+id/change_currentPass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Current Password"
+            android:inputType="textPassword" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+
+        >
+
+        <EditText
+            android:id="@+id/change_newPass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPassword"
+            android:hint="New Password" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+
+        <EditText
+            android:id="@+id/change_rePass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="New Re-Password"
+            android:inputType="textPassword"
+            android:ems="10"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/change_ApplyPass"
+        android:layout_marginTop="23dp"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="Apply Change"
+        android:textSize="22dp"
+        android:textColor="#FFFFFF"
+        android:background="@drawable/button_rounded"
+        />
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
+
+        >
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="235dp"
+            android:layout_height="92dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="3dp"
+            android:layout_alignParentBottom="true"
+            app:srcCompat="@drawable/sislab" />
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="138dp"
+            android:layout_height="104dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="0dp"
+            app:srcCompat="@drawable/cn" />
+    </RelativeLayout>
+
+
+</LinearLayout>
