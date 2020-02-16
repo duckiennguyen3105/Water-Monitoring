@@ -8,8 +8,13 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import com.Sislab.MagicSpoon.model.TremorTest;
+import com.github.mikephil.charting.data.Entry;
+
+import java.util.ArrayList;
+
 public class TremorTestData extends SQLiteOpenHelper {
-    private static final String DATABASE_NAME = "MagicSpoon2.db";
+    private static final String DATABASE_NAME = "MagicSpoon3.db";
     private static final String TABLE_NAME = "tremor_data";
 
     private static final String TIME = "time";
@@ -23,7 +28,7 @@ public class TremorTestData extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        String createTable = "CREATE TABLE "+ TABLE_NAME+ " ( "+TIME+ " TEXT, "+
+        String createTable = "CREATE TABLE "+ TABLE_NAME+ " ( "+TIME+ " REAL, "+
                 XAXIS +" REAL, "+
                 YAXIS +" REAL, "+
                 ZAXIS +" REAL)";
@@ -35,7 +40,7 @@ public class TremorTestData extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
     }
 
-    public boolean addData(String time,float xAs,float yAs,float zAs){
+    public boolean addData(float time,float xAs,float yAs,float zAs){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(TIME,time);
@@ -55,11 +60,22 @@ public class TremorTestData extends SQLiteOpenHelper {
         String query = "DELETE FROM "+TABLE_NAME;
         db.execSQL(query);
     }
-
-    public Cursor getAllData(){
+    public ArrayList<TremorTest> getDataTremorTest(){
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor data = db.rawQuery("SELECT * FROM " + TABLE_NAME,null);
-        //Nghiên cứu hiển thị dữ liệu lên Chart
-        return data;
+        ArrayList<TremorTest> cursorArrayList = new ArrayList<>();
+        Cursor cursor = db.rawQuery("select * from " + TABLE_NAME,null);
+        if(cursor.moveToFirst()){
+            for (int i = 0 ;i < cursor.getCount();i++){
+                TremorTest tremorTest = new TremorTest();
+                tremorTest.setTime(cursor.getFloat(cursor.getColumnIndex(TIME)));
+                tremorTest.setxAxis(cursor.getFloat(cursor.getColumnIndex(XAXIS)));
+                tremorTest.setyAxis(cursor.getFloat(cursor.getColumnIndex(YAXIS)));
+                tremorTest.setzAxis(cursor.getFloat(cursor.getColumnIndex(ZAXIS)));
+                cursorArrayList.add(tremorTest);
+                cursor.moveToNext();
+            }
+        }
+        return cursorArrayList;
     }
+
 }

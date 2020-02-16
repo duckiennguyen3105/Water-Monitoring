@@ -1,7 +1,7 @@
 package com.Sislab.MagicSpoon.model;
 
 public class TremorTest {
-    private String time;
+    private float time;
     private float xAxis;
     private float yAxis;
     private float zAxis;
@@ -10,18 +10,18 @@ public class TremorTest {
         super();
     }
 
-    public TremorTest(String time, float xAxis, float yAxis, float zAxis) {
+    public TremorTest(float time, float xAxis, float yAxis, float zAxis) {
         this.time = time;
         this.xAxis = xAxis;
         this.yAxis = yAxis;
         this.zAxis = zAxis;
     }
 
-    public String getTime() {
+    public float getTime() {
         return time;
     }
 
-    public void setTime(String time) {
+    public void setTime(float time) {
         this.time = time;
     }
 

@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -19,8 +20,17 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.Sislab.MagicSpoon.Chart.TestingChart;
+import com.Sislab.MagicSpoon.Fomatter.XAsisDateFomatter;
 import com.Sislab.MagicSpoon.SQLiteDatabase.TremorTestData;
 import com.Sislab.MagicSpoon.model.TremorTest;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+
+import java.util.ArrayList;
 
 
 public class Tremor_Activities extends Fragment implements SensorEventListener {
@@ -39,7 +49,14 @@ public class Tremor_Activities extends Fragment implements SensorEventListener {
 
     private boolean timerRunning;
     Handler handler;
+    TestingChart testingChart;
 
+    LineChart lineChart;
+    LineDataSet xAxisLine = new LineDataSet(null,null);
+    LineDataSet yAxisLine = new LineDataSet(null,null);
+    LineDataSet zAxisLine = new LineDataSet(null,null);
+    ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+    LineData lineData;
 
     @Nullable
     @Override
@@ -53,6 +70,7 @@ public class Tremor_Activities extends Fragment implements SensorEventListener {
     public void onStart() {
         super.onStart();
         myDb = new TremorTestData(this.getContext());
+        lineChart = (LineChart) getView().findViewById(R.id.tremor_chart);
         instruction = (TextView) getView().findViewById(R.id.instruction_hold);
         Xaxis = (TextView) getView().findViewById(R.id.X_Tremor);
         Yaxis = (TextView) getView().findViewById(R.id.Y_Tremor);
@@ -61,6 +79,33 @@ public class Tremor_Activities extends Fragment implements SensorEventListener {
         btnReset = (Button) getView().findViewById(R.id.btn_ResetTest);
         sensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+
+        lineChart.setNoDataTextColor(Color.RED);
+        lineChart.setDrawGridBackground(true);
+        lineChart.setVisibleXRangeMaximum(6);
+        lineChart.setDragEnabled(true);
+        xAxisLine.setLineWidth(2);
+        xAxisLine.setColor(Color.RED);
+        xAxisLine.setValueTextSize(10);
+        xAxisLine.setDrawCircles(false);
+        yAxisLine.setLineWidth(2);
+        yAxisLine.setColor(Color.BLUE);
+        yAxisLine.setValueTextSize(10);
+        yAxisLine.setDrawCircles(false);
+        zAxisLine.setLineWidth(2);
+        zAxisLine.setColor(Color.YELLOW);
+        zAxisLine.setValueTextSize(10);
+        zAxisLine.setDrawCircles(false);
+
+        XAxis xAxis = lineChart.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setAxisMinimum(0);
+        xAxis.setAxisMaximum(20);
+        xAxis.setLabelCount(5, true);
+        xAxis.setDrawGridLines(false);
+
+
+
         handler = new Handler();
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,14 +135,16 @@ public class Tremor_Activities extends Fragment implements SensorEventListener {
             sec = (int)(tUpdate/1000);
             sec %= 60;
             millisec = (int) (tUpdate%1000);
-            tremorTest.setTime(String.format("%02d",sec)+"."+String.format("%03d",millisec));
+            tremorTest.setTime(Float.parseFloat(String.format("%02d",sec)+"."+String.format("%03d",millisec)));
             sensorManager.registerListener(Tremor_Activities.this,accelerometer,SensorManager.SENSOR_DELAY_NORMAL);
             instruction.setVisibility(View.VISIBLE);
-            instruction.setText(tremorTest.getTime());
+            instruction.setText(String.valueOf(tremorTest.getTime()));
             handler.postDelayed(this,0);
+            TremorTestData tremorTestData = new TremorTestData(getContext());
             if(sec == 20){
                 resetTimer();
                 handler.removeCallbacks(runnable);
+                showToChart();
             }
         }
     };
@@ -116,10 +163,10 @@ public class Tremor_Activities extends Fragment implements SensorEventListener {
         sec =0;
         millisec = 0;
         timerRunning = false;
-        myDb.deteleData();
     }
 
     private void startTimer() {
+        myDb.deteleData();
         tStart = SystemClock.uptimeMillis();
         handler.postDelayed(runnable,0);
         timerRunning =true;
@@ -135,6 +182,32 @@ public class Tremor_Activities extends Fragment implements SensorEventListener {
         sensorManager.unregisterListener(Tremor_Activities.this,accelerometer);
     }
 
+    private void AddData(float time, float getxAxis, float getyAxis, float getzAxis) {
+        boolean insertData = myDb.addData(time,getxAxis,getyAxis,getzAxis);
+        if(insertData){
+            Log.d(TAG, "AddData: Success");
+        }else {
+            Log.d(TAG, "AddData: Fail");
+        }
+    }
+
+    private void showToChart(){
+        testingChart = new TestingChart();
+        xAxisLine.setValues(testingChart.showXAxis(this.getContext()));
+        xAxisLine.setLabel("X Axis");
+        yAxisLine.setValues(testingChart.showYAxis(this.getContext()));
+        yAxisLine.setLabel("Y Axis");
+        zAxisLine.setValues(testingChart.showZAxis(this.getContext()));
+        zAxisLine.setLabel("Z Axis");
+        dataSets.clear();
+        dataSets.add(xAxisLine);
+        dataSets.add(yAxisLine);
+        dataSets.add(zAxisLine);
+        lineData = new LineData(dataSets);
+        lineChart.clear();
+        lineChart.setData(lineData);
+        lineChart.invalidate();
+    }
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
@@ -144,21 +217,15 @@ public class Tremor_Activities extends Fragment implements SensorEventListener {
         tremorTest.setxAxis(Float.parseFloat(String.format("%.2f",sensorEvent.values[0])));
         tremorTest.setyAxis(Float.parseFloat(String.format("%.2f",sensorEvent.values[1])));
         tremorTest.setzAxis(Float.parseFloat(String.format("%.2f",sensorEvent.values[2])));
-        System.out.println(Float.parseFloat(tremorTest.getTime()));
-        AddData("12",  12,12,12);
+        System.out.println(tremorTest.getTime());
+        AddData(tremorTest.getTime(),  tremorTest.getxAxis(),tremorTest.getyAxis(),tremorTest.getzAxis());
     }
 
-    private void AddData(String time, float getxAxis, float getyAxis, float getzAxis) {
-        boolean insertData = myDb.addData(time,getxAxis,getyAxis,getzAxis);
-        if(insertData){
-            Log.d(TAG, "AddData: Success");
-        }else {
-            Log.d(TAG, "AddData: Fail");
-        }
-    }
+
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int i) {
         
     }
+
 }
