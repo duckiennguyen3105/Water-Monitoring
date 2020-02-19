@@ -81,6 +81,10 @@ public class Navigation_Menu extends AppCompatActivity implements NavigationView
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new Tremor_Activities()).commit();
                 break;
+            case  R.id.nav_history:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new TestHistory_Acitvity()).commit();
+                break;
             case R.id.nav_profile:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new Profile_Form()).commit();

@@ -11,7 +11,7 @@
             android:title="Device Connection Status"/>
         <item android:id="@+id/nav_history"
             android:icon="@drawable/ic_history_details"
-            android:title="History of Vabration Chart"/>
+            android:title="History of Tremor Chart"/>
         <item
             android:id="@+id/nav_tremorTest"
             android:icon="@drawable/ic_assignment_turned_in_black_24dp"

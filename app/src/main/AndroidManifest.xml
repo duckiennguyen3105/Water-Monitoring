@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.BODY_SENSORS" />
 
     <application
         android:allowBackup="true"
@@ -12,7 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Tremor_Activities"></activity>
+        <activity android:name=".TestingChart_Acitivity"></activity>
+        <activity android:name=".TestHistory_Acitvity" />
+        <activity android:name=".Tremor_Activities" />
         <activity android:name=".Bluetooth_Activities" />
         <activity android:name=".ChangePass_Form" />
         <activity android:name=".ChangeDetail_Form" />

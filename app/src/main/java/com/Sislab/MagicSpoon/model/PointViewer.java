@@ -9,7 +9,7 @@ public class PointViewer {
     }
 
     public PointViewer(float value, long timestamp) {
-        value = value;
+        this.value = value;
         this.timestamp = timestamp;
     }
 

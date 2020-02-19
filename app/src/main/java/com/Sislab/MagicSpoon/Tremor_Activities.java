@@ -19,12 +19,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.Sislab.MagicSpoon.Chart.TestingChart;
-import com.Sislab.MagicSpoon.Fomatter.XAsisDateFomatter;
+import com.Sislab.MagicSpoon.FirebaseDatabase.TremorTestFirebase;
 import com.Sislab.MagicSpoon.SQLiteDatabase.TremorTestData;
 import com.Sislab.MagicSpoon.model.TremorTest;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -37,6 +39,7 @@ public class Tremor_Activities extends Fragment implements SensorEventListener {
     private static final String TAG = "Tremor_Activities";
     private TremorTest tremorTest;
     private TremorTestData myDb;
+    private TremorTestFirebase tremorTestFirebase = new TremorTestFirebase();
 
     private SensorManager sensorManager;
     private Sensor accelerometer;
@@ -44,19 +47,20 @@ public class Tremor_Activities extends Fragment implements SensorEventListener {
     private Button btnStart,btnReset;
 
 
-    long tMillisec= 0L,tStart=0L,tBuff=0L,tUpdate = 0L;
+    private long tMillisec= 0L,tStart=0L,tBuff=0L,tUpdate = 0L;
     int sec,millisec;
 
     private boolean timerRunning;
-    Handler handler;
-    TestingChart testingChart;
+    private Handler handler;
+    private TestingChart testingChart;
 
-    LineChart lineChart;
-    LineDataSet xAxisLine = new LineDataSet(null,null);
-    LineDataSet yAxisLine = new LineDataSet(null,null);
-    LineDataSet zAxisLine = new LineDataSet(null,null);
-    ArrayList<ILineDataSet> dataSets = new ArrayList<>();
-    LineData lineData;
+    private LineChart lineChart;
+    private LineDataSet xAxisLine = new LineDataSet(null,null);
+    private LineDataSet yAxisLine = new LineDataSet(null,null);
+    private LineDataSet zAxisLine = new LineDataSet(null,null);
+    private ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+    private LineData lineData;
+    private Description description = new Description();
 
     @Nullable
     @Override
@@ -80,6 +84,10 @@ public class Tremor_Activities extends Fragment implements SensorEventListener {
         sensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
+        description.setTextSize(14);
+        description.setText("Hold the phone for 20 seconds");
+        lineChart.setDescription(description);
+
         lineChart.setNoDataTextColor(Color.RED);
         lineChart.setDrawGridBackground(true);
         lineChart.setVisibleXRangeMaximum(6);
@@ -88,14 +96,17 @@ public class Tremor_Activities extends Fragment implements SensorEventListener {
         xAxisLine.setColor(Color.RED);
         xAxisLine.setValueTextSize(10);
         xAxisLine.setDrawCircles(false);
+        xAxisLine.setDrawValues(false);
         yAxisLine.setLineWidth(2);
         yAxisLine.setColor(Color.BLUE);
         yAxisLine.setValueTextSize(10);
         yAxisLine.setDrawCircles(false);
+        yAxisLine.setDrawValues(false);
         zAxisLine.setLineWidth(2);
-        zAxisLine.setColor(Color.YELLOW);
+        zAxisLine.setColor(Color.GREEN);
         zAxisLine.setValueTextSize(10);
         zAxisLine.setDrawCircles(false);
+        zAxisLine.setDrawValues(false);
 
         XAxis xAxis = lineChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
@@ -144,10 +155,16 @@ public class Tremor_Activities extends Fragment implements SensorEventListener {
             if(sec == 20){
                 resetTimer();
                 handler.removeCallbacks(runnable);
-                showToChart();
+                Toast.makeText(getContext(),"Test Finished! Data has been stored to History Tremor",Toast.LENGTH_LONG).show();
+                int id = 1;
+                for (TremorTest tremorTest: tremorTestData.getDataTremorTest()) {
+                    tremorTestFirebase.pushData(id,tremorTest);
+                    id++;
+                }
             }
         }
     };
+
     private void resetTimer() {
         btnReset.setEnabled(false);
         btnStart.setText("Starting Test");
@@ -166,7 +183,9 @@ public class Tremor_Activities extends Fragment implements SensorEventListener {
     }
 
     private void startTimer() {
-        myDb.deteleData();
+        if(sec == 0){
+            myDb.deteleData();
+        }
         tStart = SystemClock.uptimeMillis();
         handler.postDelayed(runnable,0);
         timerRunning =true;
@@ -219,6 +238,7 @@ public class Tremor_Activities extends Fragment implements SensorEventListener {
         tremorTest.setzAxis(Float.parseFloat(String.format("%.2f",sensorEvent.values[2])));
         System.out.println(tremorTest.getTime());
         AddData(tremorTest.getTime(),  tremorTest.getxAxis(),tremorTest.getyAxis(),tremorTest.getzAxis());
+        showToChart();
     }
 
 

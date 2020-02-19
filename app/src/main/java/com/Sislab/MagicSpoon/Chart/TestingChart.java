@@ -32,4 +32,27 @@ public class TestingChart {
         }
         return zVals;
     }
+
+    public ArrayList<Entry> showXAxis(ArrayList<TremorTest> tremorTests){
+        ArrayList<Entry> xVals = new ArrayList<>();
+        for (TremorTest tremorTest: tremorTests) {
+            xVals.add(new Entry(tremorTest.getTime(),tremorTest.getxAxis()));
+        }
+        return xVals;
+    }
+    public ArrayList<Entry> showYAxis(ArrayList<TremorTest> tremorTests){
+        ArrayList<Entry> yVals = new ArrayList<>();
+        for (TremorTest tremorTest: tremorTests) {
+            yVals.add(new Entry(tremorTest.getTime(),tremorTest.getyAxis()));
+        }
+        return yVals;
+    }
+    public ArrayList<Entry> showZAxis(ArrayList<TremorTest> tremorTests){
+        ArrayList<Entry> zVals = new ArrayList<>();
+        for (TremorTest tremorTest: tremorTests) {
+            zVals.add(new Entry(tremorTest.getTime(),tremorTest.getzAxis()));
+        }
+        return zVals;
+    }
+
 }

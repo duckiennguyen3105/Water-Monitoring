@@ -9,7 +9,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import androidx.annotation.Nullable;
 
 import com.Sislab.MagicSpoon.model.TremorTest;
-import com.github.mikephil.charting.data.Entry;
 
 import java.util.ArrayList;
 
@@ -49,16 +48,19 @@ public class TremorTestData extends SQLiteOpenHelper {
         contentValues.put(ZAXIS,zAs);
 
         long result = db.insert(TABLE_NAME,null,contentValues);
+        closeDb(db);
         if(result == -1){
             return false;
         }else {
             return true;
         }
+
     }
     public void deteleData(){
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "DELETE FROM "+TABLE_NAME;
         db.execSQL(query);
+        closeDb(db);
     }
     public ArrayList<TremorTest> getDataTremorTest(){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -75,7 +77,15 @@ public class TremorTestData extends SQLiteOpenHelper {
                 cursor.moveToNext();
             }
         }
+        closeDb(db);
         return cursorArrayList;
+
+    }
+
+    public void closeDb(SQLiteDatabase db){
+        if(db.isOpen()){
+            db.close();
+        }
     }
 
 }
