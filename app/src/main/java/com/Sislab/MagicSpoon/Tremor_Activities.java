@@ -28,6 +28,7 @@ import com.Sislab.MagicSpoon.model.TremorTest;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
@@ -115,6 +116,14 @@ public class Tremor_Activities extends Fragment implements SensorEventListener {
         xAxis.setLabelCount(5, true);
         xAxis.setDrawGridLines(false);
 
+        YAxis yAxisLeft = lineChart.getAxisLeft();
+        yAxisLeft.setAxisMaximum(30);
+        yAxisLeft.setAxisMinimum(-30);
+        yAxisLeft.setLabelCount(8,false);
+        YAxis yAxisRight = lineChart.getAxisRight();
+        yAxisRight.setAxisMaximum(30);
+        yAxisRight.setAxisMinimum(-30);
+        yAxisRight.setLabelCount(8,false);
 
 
         handler = new Handler();
