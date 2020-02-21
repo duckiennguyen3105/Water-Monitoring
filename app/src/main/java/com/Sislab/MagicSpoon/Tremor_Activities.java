@@ -239,12 +239,12 @@ public class Tremor_Activities extends Fragment implements SensorEventListener {
 
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
-        Xaxis.setText(String.format("%.2f",sensorEvent.values[0]));
-        Yaxis.setText(String.format("%.2f",sensorEvent.values[1]));
-        Zaxis.setText(String.format("%.2f",sensorEvent.values[2]));
-        tremorTest.setxAxis(Float.parseFloat(String.format("%.2f",sensorEvent.values[0])));
-        tremorTest.setyAxis(Float.parseFloat(String.format("%.2f",sensorEvent.values[1])));
-        tremorTest.setzAxis(Float.parseFloat(String.format("%.2f",sensorEvent.values[2])));
+        Xaxis.setText(String.format("%.2f",sensorEvent.values[0]).replace(",","."));
+        Yaxis.setText(String.format("%.2f",sensorEvent.values[1]).replace(",","."));
+        Zaxis.setText(String.format("%.2f",sensorEvent.values[2]).replace(",","."));
+        tremorTest.setxAxis(Float.parseFloat(String.format("%.2f",sensorEvent.values[0]).replace(",",".")));
+        tremorTest.setyAxis(Float.parseFloat(String.format("%.2f",sensorEvent.values[1]).replace(",",".")));
+        tremorTest.setzAxis(Float.parseFloat(String.format("%.2f",sensorEvent.values[2]).replace(",",".")));
         System.out.println(tremorTest.getTime());
         AddData(tremorTest.getTime(),  tremorTest.getxAxis(),tremorTest.getyAxis(),tremorTest.getzAxis());
         showToChart();
