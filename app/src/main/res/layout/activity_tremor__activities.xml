@@ -18,7 +18,7 @@
 
             <Button
                 android:id="@+id/btn_StartTest"
-                android:text="Starting Test"
+                android:text="Start Water"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
@@ -46,7 +46,7 @@
                     android:id="@+id/X_axis"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="X Axis: "/>
+                    android:text="Basement: "/>
 
                 <TextView
                     android:id="@+id/X_Tremor"
@@ -65,7 +65,7 @@
                     android:id="@+id/Y_axis"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Y Axis: "/>
+                    android:text="Room 1: "/>
 
                 <TextView
                     android:id="@+id/Y_Tremor"
@@ -84,7 +84,7 @@
                     android:id="@+id/Z_axis"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Z Axis: "/>
+                    android:text="Room 2: "/>
 
                 <TextView
 

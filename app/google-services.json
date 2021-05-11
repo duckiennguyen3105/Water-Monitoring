@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:409272214637:android:287e6177e7713d7cff0b64",
         "android_client_info": {
-          "package_name": "com.Sislab.MagicSpoon"
+          "package_name": "com.Sislab.WaterMonitoring"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "409272214637-08i8ofgbi9l6u7s7u0a1dl2evladkkdi.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.Sislab.MagicSpoon",
+            "package_name": "com.Sislab.WaterMonitoring",
             "certificate_hash": "11237e6578012bd3dfeef7acc77b3da1ff5ff632"
           }
         },

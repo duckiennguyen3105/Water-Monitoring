@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.Sislab.MagicSpoon">
+    package="com.Sislab.WaterMonitoring">
 
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
@@ -13,7 +13,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".TestingChart_Acitivity"></activity>
+        <activity android:name=".WaterLevel_Activity"></activity>
+        <activity android:name=".pH_Activity" />
+        <activity android:name=".Temperator_Activity" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".TestingChart_Acitivity" />
         <activity android:name=".TestHistory_Acitvity" />
         <activity android:name=".Tremor_Activities" />
         <activity android:name=".Bluetooth_Activities" />

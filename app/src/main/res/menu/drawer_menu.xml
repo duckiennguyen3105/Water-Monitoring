@@ -3,19 +3,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
     <group android:checkableBehavior="single">
-        <item android:id="@+id/nav_chart"
-            android:icon="@drawable/ic_chart"
-            android:title="Vabration's Chart"/>
-        <item android:id="@+id/nav_bluetooth"
-            android:icon="@drawable/ic_bluetooth_device"
-            android:title="Device Connection Status"/>
+        <item android:id="@+id/nav_temperator"
+            android:icon="@drawable/ic_temperator"
+            android:title="Temperature Water"/>
+        <item android:id="@+id/nav_waterlevel"
+            android:icon="@drawable/ic_waterlevel"
+            android:title="Water Level"/>
+        <item android:id="@+id/nav_pH"
+            android:icon="@drawable/ic_baseline_water_damage_24"
+            android:title="pH's Water"/>
         <item android:id="@+id/nav_history"
             android:icon="@drawable/ic_history_details"
-            android:title="History of Tremor Chart"/>
+            android:title="History of Water Chart"/>
         <item
             android:id="@+id/nav_tremorTest"
-            android:icon="@drawable/ic_assignment_turned_in_black_24dp"
-            android:title="Tremor Test" />
+            android:icon="@drawable/ic_chart"
+            android:title="Control Water" />
     </group>
     <item android:title="User Details">
         <menu>
