@@ -1,4 +1,4 @@
-# Application for Smart Spoon
+# Application for Water-Monitoring
 Timestamp to MPchart and save it
 
 This is an application on Android Operating System
